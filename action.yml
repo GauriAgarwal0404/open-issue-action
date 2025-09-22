@@ -4,7 +4,7 @@ author: 'Your Name'
 
 inputs:
   token:
-    description: 'GitHub token with issues write permission (use ${{ secrets.GITHUB_TOKEN }} with "permissions: issues: write")'
+    description: 'GitHub token with issues write permission'
     required: true
   title:
     description: 'Issue title'
