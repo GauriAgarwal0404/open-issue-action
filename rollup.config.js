@@ -22,7 +22,7 @@ export default {
   external: [
     'assert',
     'buffer',
-    'child_process', 
+    'child_process',
     'crypto',
     'events',
     'fs',
