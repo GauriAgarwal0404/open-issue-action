@@ -1,23 +1,23 @@
-name: "Open a Github issue"
-description: "Open a Github issue"
+name: 'Open a Github issue'
+description: 'Open a Github issue'
 author: GA
 # Define your inputs here.
 inputs:
   token:
-    description: "Github Token"
+    description: 'Github Token'
     required: true
   title:
-    description: "Issue Title"
+    description: 'Issue Title'
     required: true
-  body: 
-    description: "Issue Body"
+  body:
+    description: 'Issue Body'
     required: true
   assignees:
-    description: "Issue Assignees"
+    description: 'Issue Assignees'
 # Define your outputs here.
 outputs:
-  issue:       #id of output
-    description: "The issue object has a json string"
+  issue: #id of output
+    description: 'The issue object has a json string'
 runs:
   using: node24
   main: dist/index.js
