@@ -1,0 +1,36 @@
+name: Test Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      title:
+        description: 'Issue title'
+        required: true
+        default: 'Test Issue'
+      body:
+        description: 'Issue body'
+        required: false
+        default: 'Test issue body'
+      assignees:
+        description: 'Issue assignees'
+        required: false
+        default: ''
+
+# REQUIRED: This permission is needed for the action to create issues
+permissions:
+  issues: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Test Action
+        uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: ${{ github.event.inputs.title || 'Test Issue' }}
+          body: ${{ github.event.inputs.body || 'Test issue body' }}
+          assignees: ${{ github.event.inputs.assignees }}
