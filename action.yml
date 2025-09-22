@@ -1,23 +1,27 @@
-name: 'Open a Github issue'
-description: 'Open a Github issue'
-author: GA
-# Define your inputs here.
+name: 'Open Issue Action'
+description: 'GitHub Action to create an issue'
+author: 'Your Name'
+
 inputs:
   token:
-    description: 'Github Token'
+    description: 'GitHub token with issues write permission'
     required: true
   title:
-    description: 'Issue Title'
+    description: 'Issue title'
     required: true
   body:
-    description: 'Issue Body'
-    required: true
+    description: 'Issue body'
+    required: false
+    default: ''
   assignees:
-    description: 'Issue Assignees'
-# Define your outputs here.
+    description: 'Issue assignees (one per line)'
+    required: false
+    default: ''
+
 outputs:
-  issue: #id of output
-    description: 'The issue object has a json string'
+  issue:
+    description: 'The created issue object'
+
 runs:
-  using: node24
-  main: dist/index.js
+  using: 'node20'
+  main: 'dist/index.js'

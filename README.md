@@ -1,60 +1,60 @@
-# Create a GitHub Action Using JavaScript
+# Open Issue Action
 
-[![GitHub Super-Linter](https://github.com/actions/javascript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/javascript-action/actions/workflows/ci.yml/badge.svg)
-[![Check dist/](https://github.com/actions/javascript-action/actions/workflows/check-dist.yml/badge.svg)](https://github.com/actions/javascript-action/actions/workflows/check-dist.yml)
-[![CodeQL](https://github.com/actions/javascript-action/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/actions/javascript-action/actions/workflows/codeql-analysis.yml)
-[![Coverage](./badges/coverage.svg)](./badges/coverage.svg)
+A GitHub Action to create issues programmatically.
 
-Use this template to bootstrap the creation of a JavaScript action. :rocket:
+## Usage
 
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
+```yaml
+name: Create Issue
+on:
+  workflow_dispatch:
 
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
+# Required permissions for the action to work
+permissions:
+  issues: write
 
-## Create Your Own Action
+jobs:
+  create-issue:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Issue
+        uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Test Issue"
+          body: "Test issue body"
+          assignees: |
+            username1
+            username2
+```
 
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
+## Inputs
 
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
+| Input | Description | Required | Default |
+|-------|-------------|----------|---------|
+| `token` | GitHub token with issues write permission | Yes | |
+| `title` | Issue title | Yes | |
+| `body` | Issue body | No | `''` |
+| `assignees` | Issue assignees (one per line) | No | `''` |
 
-> [!IMPORTANT]
->
-> Make sure to remove or update the [`CODEOWNERS`](./CODEOWNERS) file! For
-> details on how to use this file, see
-> [About code owners](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners).
+## Outputs
 
-## Initial Setup
+| Output | Description |
+|--------|-------------|
+| `issue` | The created issue object |
 
-After you've cloned the repository to your local machine or codespace, you'll
-need to perform some initial setup steps before you can develop your action.
+## Permissions
 
-> [!NOTE]
->
-> You'll need to have a reasonably modern version of
-> [Node.js](https://nodejs.org) handy (20.x or later should work!). If you are
-> using a version manager like [`nodenv`](https://github.com/nodenv/nodenv) or
-> [`fnm`](https://github.com/Schniz/fnm), this template has a `.node-version`
-> file at the root of the repository that can be used to automatically switch to
-> the correct version when you `cd` into the repository. Additionally, this
-> `.node-version` file is used by GitHub Actions in any `actions/setup-node`
-> actions.
+This action requires the following permissions:
 
-1. :hammer_and_wrench: Install the dependencies
+```yaml
+permissions:
+  issues: write
+```
 
-   ```bash
-   npm install
-   ```
+## Development
 
-1. :building_construction: Package the JavaScript for distribution
-
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development instructions.
    ```bash
    npm run bundle
    ```
