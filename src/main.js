@@ -1,5 +1,5 @@
-import * as core from '@actions/core'
-import * as github from '@actions/github'
+const core = require('@actions/core')
+const github = require('@actions/github')
 
 
 /**
@@ -7,7 +7,7 @@ import * as github from '@actions/github'
  *
  * @returns {Promise<void>} Resolves when the action is complete.
  */
-export async function run() {
+async function run() {
   try {
     const token = core.getInput("token");
     const title = core.getInput("title");
@@ -29,6 +29,10 @@ export async function run() {
     
   } catch (error) {
     // Fail the workflow run if an error occurs
-    if (error instanceof Error) core.setFailed(error.message)
+    core.setFailed(error.message)
   }
+}
+
+module.exports = {
+  run
 }

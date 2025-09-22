@@ -23,7 +23,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "bundle": "npm run format:write && npm run package",
+    "bundle": "ncc build src/index.js -o dist --source-map --license licenses.txt",
     "ci-test": "NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 npx jest --passWithNoTests",
     "coverage": "npx make-coverage-badge --output-path ./badges/coverage.svg",
     "format:write": "npx prettier --write .",
@@ -46,6 +46,7 @@
     "@jest/globals": "^30.1.2",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
+    "@vercel/ncc": "^0.38.4",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
