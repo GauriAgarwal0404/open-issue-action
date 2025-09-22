@@ -13,15 +13,13 @@ async function run() {
     const body = core.getInput('body')
     const assignees = core.getInput('assignees')
 
-    const octokit = github.getOctokit(token) //to authenticate
+    const octokit = github.getOctokit(token)
 
     const response = await octokit.rest.issues.create({
-      // owner: github.context.repo.owner,
-      // repo: github.context.repo.repo,
       ...github.context.repo,
       title,
       body,
-      assignees: assignees ? assignees.split('\n') : undefined //this needs to be an array of usernames , however we are passing assignees as string
+      assignees: assignees ? assignees.split('\n') : undefined
     })
 
     core.setOutput('issue', response.data)
@@ -32,4 +30,3 @@ async function run() {
 }
 
 export { run }
-run
