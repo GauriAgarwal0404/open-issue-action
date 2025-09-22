@@ -19,6 +19,7 @@ on:
 # REQUIRED: This permission is needed for the action to create issues
 permissions:
   issues: write
+  contents: read
 
 jobs:
   test:

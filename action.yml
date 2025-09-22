@@ -1,10 +1,10 @@
 name: 'Open Issue Action'
-description: 'GitHub Action to create an issue'
+description: 'GitHub Action to create an issue. Requires "issues: write" permission to function properly.'
 author: 'Your Name'
 
 inputs:
   token:
-    description: 'GitHub token with issues write permission'
+    description: 'GitHub token with issues write permission (use ${{ secrets.GITHUB_TOKEN }} with "permissions: issues: write")'
     required: true
   title:
     description: 'Issue title'

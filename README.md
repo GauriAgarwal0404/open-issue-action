@@ -2,7 +2,13 @@
 
 A GitHub Action to create issues programmatically.
 
-## Usage
+## ⚠️ Important: Required Permissions
+
+This action **requires** the `issues: write` permission to function properly. Without this permission, you will encounter the error:
+
+```
+Resource not accessible by integration
+```
 
 To use this action, you **must** include the required permissions in your workflow file:
 
