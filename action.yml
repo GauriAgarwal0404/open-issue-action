@@ -1,24 +1,23 @@
-name: The name of your action here
-description: Provide a description here
-author: Your name or organization here
-
-# Add your action's branding here. This will appear on the GitHub Marketplace.
-branding:
-  icon: heart
-  color: red
-
+name: "Open a Github issue"
+description: "Open a Github issue"
+author: GA
 # Define your inputs here.
 inputs:
-  milliseconds:
-    description: Your input description here
+  token:
+    description: "Github Token"
     required: true
-    default: '1000'
-
+  title:
+    description: "Issue Title"
+    required: true
+  body: 
+    description: "Issue Body"
+    required: true
+  assignees:
+    description: "Issue Assignees"
 # Define your outputs here.
 outputs:
-  time:
-    description: Your output description here
-
+  issue:       #id of output
+    description: "The issue object has a json string"
 runs:
   using: node24
   main: dist/index.js
