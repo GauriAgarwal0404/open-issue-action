@@ -14,7 +14,7 @@ inputs:
     required: false
     default: ''
   assignees:
-    description: 'Issue assignees (one per line)'
+    description: 'Issue assignees (comma-separated or one per line)'
     required: false
     default: ''
 
