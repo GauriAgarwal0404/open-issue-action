@@ -3,11 +3,11 @@
  * main logic.
  */
 
-const { run } = require('./main')
+import { run } from './main.js'
 
 /* istanbul ignore next */
-if (require.main === module) {
+run()
   run()
-}
+
 
 module.exports = { run }
