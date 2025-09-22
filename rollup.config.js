@@ -1,34 +1,28 @@
 // See: https://rollupjs.org/introduction/
 
-import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
-import { createRequire } from 'node:module'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 
-const require = createRequire(import.meta.url)
-const pkg = require('./package.json')
-
-const config = {
+export default {
   input: 'src/index.js',
   output: {
     file: 'dist/index.js',
     format: 'cjs',
-    exports: 'auto',
-    banner: '#!/usr/bin/env node'
+    exports: 'auto'
   },
   plugins: [
-    commonjs(),
+    json(),
     nodeResolve({
       exportConditions: ['node'],
       preferBuiltins: true
-    })
+    }),
+    commonjs()
   ],
   external: [
-    ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {}),
-    // Node.js built-ins
     'assert',
     'buffer',
-    'child_process',
+    'child_process', 
     'crypto',
     'events',
     'fs',
@@ -46,5 +40,3 @@ const config = {
     'zlib'
   ]
 }
-
-export default config
