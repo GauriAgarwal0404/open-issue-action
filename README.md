@@ -4,12 +4,14 @@ A GitHub Action to create issues programmatically.
 
 ## Usage
 
+To use this action, you **must** include the required permissions in your workflow file:
+
 ```yaml
 name: Create Issue
 on:
   workflow_dispatch:
 
-# IMPORTANT: Required permissions for the action to work
+# REQUIRED: This action needs write permissions to create issues
 permissions:
   issues: write
 
@@ -35,6 +37,9 @@ permissions:
   issues: write
 ```
 
+Without this permission, you'll get the error:
+
+````markdown
 ## Inputs
 
 | Input | Description | Required | Default |
@@ -71,3 +76,4 @@ If you're using this in an organization repository, you may need to:
 ## Development
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development instructions.
+````
