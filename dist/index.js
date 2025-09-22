@@ -1,5 +1,4 @@
-'use strict';
-
+#!/usr/bin/env node
 var require$$0 = require('os');
 var require$$0$1 = require('crypto');
 var require$$1 = require('fs');
@@ -28468,8 +28467,6 @@ const createTokenAuth = function createTokenAuth2(token) {
     hook: hook.bind(null, token)
   });
 };
-
-// pkg/dist-src/index.js
 
 // pkg/dist-src/version.js
 var VERSION$2 = "5.2.2";

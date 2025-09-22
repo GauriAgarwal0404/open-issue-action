@@ -9,15 +9,21 @@ export default {
   output: {
     file: 'dist/index.js',
     format: 'cjs',
-    exports: 'auto'
+    exports: 'auto',
+    banner: '#!/usr/bin/env node',
+    strict: false
   },
   plugins: [
     json(),
     nodeResolve({
       exportConditions: ['node'],
-      preferBuiltins: true
+      preferBuiltins: true,
+      browser: false
     }),
-    commonjs()
+    commonjs({
+      include: /node_modules/,
+      transformMixedEsModules: true
+    })
   ],
   external: [
     'assert',
