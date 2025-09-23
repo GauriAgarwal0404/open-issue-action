@@ -62,7 +62,7 @@ jobs:
           title: Test Issue
           body: Test issue body
           assignees: |
-            gauri
+            gauriagarwal04
       - name: Print Output
         id: output
         run: echo "${{ steps.test-action.outputs.issue }}"
