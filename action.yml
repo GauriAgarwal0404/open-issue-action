@@ -1,4 +1,4 @@
-name: 'Open Issue Action'
+name: 'Open Issue Action for testing'
 description:
   'GitHub Action to create an issue. Requires "issues: write" permission to
   function properly.'
