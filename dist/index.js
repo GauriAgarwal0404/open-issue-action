@@ -29,6 +29,21 @@ var require$$0$9 = require('diagnostics_channel');
 var require$$2$3 = require('child_process');
 var require$$6$1 = require('timers');
 
+function _mergeNamespaces(n, m) {
+	m.forEach(function (e) {
+		e && typeof e !== 'string' && !Array.isArray(e) && Object.keys(e).forEach(function (k) {
+			if (k !== 'default' && !(k in n)) {
+				var d = Object.getOwnPropertyDescriptor(e, k);
+				Object.defineProperty(n, k, d.get ? d : {
+					enumerable: true,
+					get: function () { return e[k]; }
+				});
+			}
+		});
+	});
+	return Object.freeze(n);
+}
+
 var commonjsGlobal = typeof globalThis !== 'undefined' ? globalThis : typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
 function getDefaultExportFromCjs (x) {
@@ -27280,7 +27295,7 @@ function requireCore () {
 
 var coreExports = requireCore();
 
-var github = {};
+var github$2 = {};
 
 var context = {};
 
@@ -31193,9 +31208,9 @@ function requireUtils () {
 var hasRequiredGithub;
 
 function requireGithub () {
-	if (hasRequiredGithub) return github;
+	if (hasRequiredGithub) return github$2;
 	hasRequiredGithub = 1;
-	var __createBinding = (github && github.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+	var __createBinding = (github$2 && github$2.__createBinding) || (Object.create ? (function(o, m, k, k2) {
 	    if (k2 === undefined) k2 = k;
 	    var desc = Object.getOwnPropertyDescriptor(m, k);
 	    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
@@ -31206,23 +31221,23 @@ function requireGithub () {
 	    if (k2 === undefined) k2 = k;
 	    o[k2] = m[k];
 	}));
-	var __setModuleDefault = (github && github.__setModuleDefault) || (Object.create ? (function(o, v) {
+	var __setModuleDefault = (github$2 && github$2.__setModuleDefault) || (Object.create ? (function(o, v) {
 	    Object.defineProperty(o, "default", { enumerable: true, value: v });
 	}) : function(o, v) {
 	    o["default"] = v;
 	});
-	var __importStar = (github && github.__importStar) || function (mod) {
+	var __importStar = (github$2 && github$2.__importStar) || function (mod) {
 	    if (mod && mod.__esModule) return mod;
 	    var result = {};
 	    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
 	    __setModuleDefault(result, mod);
 	    return result;
 	};
-	Object.defineProperty(github, "__esModule", { value: true });
-	github.getOctokit = github.context = void 0;
+	Object.defineProperty(github$2, "__esModule", { value: true });
+	github$2.getOctokit = github$2.context = void 0;
 	const Context = __importStar(requireContext());
 	const utils_1 = requireUtils();
-	github.context = new Context.Context();
+	github$2.context = new Context.Context();
 	/**
 	 * Returns a hydrated octokit ready to use for GitHub Actions
 	 *
@@ -31233,12 +31248,18 @@ function requireGithub () {
 	    const GitHubWithPlugins = utils_1.GitHub.plugin(...additionalPlugins);
 	    return new GitHubWithPlugins((0, utils_1.getOctokitOptions)(token, options));
 	}
-	github.getOctokit = getOctokit;
+	github$2.getOctokit = getOctokit;
 	
-	return github;
+	return github$2;
 }
 
 var githubExports = requireGithub();
+var github = /*@__PURE__*/getDefaultExportFromCjs(githubExports);
+
+var github$1 = /*#__PURE__*/_mergeNamespaces({
+	__proto__: null,
+	default: github
+}, [githubExports]);
 
 /**
  * The main function for the action.
@@ -31247,24 +31268,41 @@ var githubExports = requireGithub();
  */
 async function run() {
   try {
-    const token = coreExports.getInput('token');
-    const title = coreExports.getInput('title');
-    const body = coreExports.getInput('body');
-    const assignees = coreExports.getInput('assignees');
+    // Get inputs from action.yml
+    const token = coreExports.getInput('token', { required: true });
+    const title = coreExports.getInput('title', { required: true });
+    const body = coreExports.getInput('body') || '';
+    const assigneesInput = coreExports.getInput('assignees') || '';
 
+    // Parse assignees (can be comma-separated or newline-separated)
+    const assignees = assigneesInput
+      .split(/[,\n]/)
+      .map(assignee => assignee.trim())
+      .filter(assignee => assignee.length > 0);
+
+    // Get the repository context
+    const { context } = github$1;
+    const { owner, repo } = context.repo;
+
+    // Create GitHub client
     const octokit = githubExports.getOctokit(token);
 
+    // Create the issue
     const response = await octokit.rest.issues.create({
-      ...githubExports.context.repo,
+      owner,
+      repo,
       title,
       body,
-      assignees: assignees ? assignees.split('\n') : undefined
+      assignees: assignees.length > 0 ? assignees : undefined
     });
 
-    coreExports.setOutput('issue', response.data);
+    // Set outputs
+    coreExports.setOutput('issue', JSON.stringify(response.data));
+
+    coreExports.info(`Created issue #${response.data.number}: ${response.data.title}`);
+    coreExports.info(`Issue URL: ${response.data.html_url}`);
   } catch (error) {
-    // Fail the workflow run if an error occurs
-    coreExports.setFailed(error.message);
+    coreExports.setFailed(`Action failed: ${error.message}`);
   }
 }
 
