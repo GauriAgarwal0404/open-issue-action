@@ -1,31 +1,31 @@
-name: 'Open Issue Action'
+name: "Open Issue Action"
 description: 'GitHub Action to create an issue. Requires "issues: write" permission to function properly.'
-author: 'Your Name'
+author: "Your Name"
 
 inputs:
   token:
-    description: 'GitHub token with issues write permission'
+    description: "GitHub token with issues write permission"
     required: true
   title:
-    description: 'Issue title'
+    description: "Issue title"
     required: true
   body:
-    description: 'Issue body'
+    description: "Issue body"
     required: false
-    default: ''
+    default: ""
   assignees:
-    description: 'Issue assignees (comma-separated or one per line)'
+    description: "Issue assignees (comma-separated or one per line)"
     required: false
-    default: ''
+    default: ""
 
 outputs:
   issue:
-    description: 'The created issue object'
+    description: "The created issue object"
 
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: "node20"
+  main: "dist/index.js"
 
 branding:
-  icon: 'alert-circle'
-  color: 'red'
+  icon: "alert-circle"
+  color: "red"
