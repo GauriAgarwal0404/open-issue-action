@@ -31277,8 +31277,8 @@ async function run() {
     // Parse assignees (can be comma-separated or newline-separated)
     const assignees = assigneesInput
       .split(/[,\n]/)
-      .map(assignee => assignee.trim())
-      .filter(assignee => assignee.length > 0);
+      .map((assignee) => assignee.trim())
+      .filter((assignee) => assignee.length > 0);
 
     // Get the repository context
     const { context } = github$1;
