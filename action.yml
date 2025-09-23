@@ -30,4 +30,4 @@ runs:
 
 branding:
   icon: 'alert-circle'
-  color: 'red'
+  color: 'yellow'
