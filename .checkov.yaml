@@ -1,0 +1,12 @@
+# Checkov configuration file for security scanning
+framework:
+  - github_actions
+
+skip-check:
+  # Skip checks that are not relevant for this action
+  - CKV2_GHA_1 # Ensure top-level permissions are not set to write-all
+
+output:
+  - cli
+
+quiet: true
